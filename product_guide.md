@@ -356,11 +356,87 @@ seconds for the device to fully boot and become ready for use.
 
 ### 5.7 Verify Modbus Polled Data in `TABLE_DEVICES_OUTPUT`
 
+In **Database**, select `TABLE_DEVICES_OUTPUT`. Confirm that the mapping
+configured in `TABLE_DEVICES_INPUT` appears in this table and that its `VALUE`
+field shows the expected value read from the Modbus device.
+
+The `TABLE_DEVICES_OUTPUT` is a live view of the gateway's polling
+results, updated at the configured polling interval.
+
+> **NOTE:**
+> - If the expected mapping or value is **not** shown, check the Modbus wiring.
+> - Also check the `DEVICE_ID`, `REG_ADDR`, `FUNC_CODE`, and `OID_COLUMN` configured in
+>   `TABLE_DEVICES_INPUT`.
+> - You can ignore the `HASH_ID`, since it is an internal identifier used by
+>   the gateway.
+
+![Device Console Database, TABLE_DEVICES_OUTPUT](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devices_output.png)
+
 
 
 <br>
 
 ### 5.8 Verify Modbus Polled Data via SNMP
+
+This example uses a Linux computer and SNMPv2c to read the Modbus value
+published by the gateway. The SNMP settings used below are configured in
+[Section 4.2.4, SNMP](#424-snmp).
+
+Use `snmpwalk` to view **ALL** SNMP values available under the gateway's
+`SysObjectID`.
+
+```text
+snmpwalk -v2c -c <read-community> <gateway-ip> <SysObjectID>
+```
+
+For this example, use the configured read community, gateway IP address, and
+`SysObjectID`:
+
+```bash
+snmpwalk -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46
+```
+
+![Linux terminal, SNMP walk example](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpwalk_example.png)
+
+The command displays the available SNMP values and their full OIDs. Locate the
+value with `OID_COLUMN` `401` in the command output.
+
+Use `snmpget` to read one specific value. The full scalar OID has the following
+format:
+
+```text
+<SysObjectID>.1.<OID_COLUMN>.0
+```
+
+Use the following command to read the value with `OID_COLUMN` `401`:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
+```
+
+![Linux terminal, SNMP get example](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_example.png)
+
+> **NOTE:**
+> - Replace `public`, `192.168.1.40`, and `1.3.6.1.4.1.20738.45.46` when
+>   the corresponding settings of your gateway are different.
+> - SNMPv3 can also be used. Use the username, authentication settings, and
+>   privacy settings configured in the Device Console. The general command
+>   format is:
+>
+>   ```text
+>   snmpwalk -v3 -l authPriv -u <username> -a <auth-protocol> \
+>     -A <authentication-password> -x <privacy-protocol> \
+>     -X <privacy-password> <gateway-ip> <SysObjectID>
+>   ```
+>
+>   ```text
+>   snmpget -v3 -l authPriv -u <username> -a <auth-protocol> \
+>     -A <authentication-password> -x <privacy-protocol> \
+>     -X <privacy-password> <gateway-ip> <SysObjectID>.1.<OID_COLUMN>.0
+>   ```
+>
+> - Other SNMP tools can be used instead of the Linux command line. For
+>   example, Windows users can use Paessler SNMP Tester.
 
 
 
@@ -368,12 +444,50 @@ seconds for the device to fully boot and become ready for use.
 
 ### 5.9 Write Data to Modbus
 
+#### 5.9.1 Write Data Using SNMP
 
+<!-- TODO: Use `OID_COLUMN` `207`. Show the `snmpset` command and its result,
+including screenshots. -->
+
+#### 5.9.2 Verify Written Data
+
+<!-- TODO: Verify `OID_COLUMN` `207` in the Device Console and with an
+`snmpget` command. Also show `OID_COLUMN` `65534`, which provides the SNMP
+response messages. Include screenshots of both verification methods. -->
+
+#### 5.9.3 Reboot Device via Device Console
+
+<!-- TODO: Show the Device Console reboot action, including a screenshot. -->
 
 <br>
 
 ### 5.10 Change Settings via SNMP
 
+#### 5.10.1 Review the Setting in `TABLE_SETTINGS`
+
+<!-- TODO: Show `TABLE_SETTINGS`, including the setting name, current value,
+and `OID_COLUMN`, with a screenshot. -->
+
+#### 5.10.2 Write Setting Using SNMP
+
+<!-- TODO: Show the SNMP command used to write the setting and its result,
+including screenshots. -->
+
+#### 5.10.3 Verify Written Setting on the Device Console
+
+<!-- TODO: Show the written setting in the Device Console, including a
+screenshot. -->
+
+#### 5.10.4 Verify Written Setting via SNMPGET
+
+<!-- TODO: Show the `snmpget` command used to verify the written setting and
+its result. Also show `OID_COLUMN` `65534`, which provides the SNMP response
+messages. Include screenshots. -->
+
+#### 5.10.5 Reboot Device via SNMP
+
+<!-- TODO: Show the SNMP command used to reboot the device and its result,
+including screenshots. -->
 
 
 

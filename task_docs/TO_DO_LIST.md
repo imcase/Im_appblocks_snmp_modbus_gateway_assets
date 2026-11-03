@@ -39,7 +39,7 @@ Go-back-to: [Bookmarks](#bookmarks)
 - [X] __MUST__ explicitly state that the device must be `restarted after every modification`.
 4. [COMPLETED] __MUST__ document `MD button` handling, including the following reset procedure:
 
-5. [PENDING] __MUST__ add an example showing from start to end how to use the device
+5. [IN_PROGRESS] __MUST__ add an example showing from start to end how to use the device
 - [ ] Do NOT forget an example of `snmpwalk`, `snmpget`, and `snmpset`
 - [ ] Do __NOT__ forget to also use an example with `reboot_device`
 **NOTE:** this is important because the customer should be aware that they have to trigger `reboot_device` twice within `10 seconds` or this to take effect
