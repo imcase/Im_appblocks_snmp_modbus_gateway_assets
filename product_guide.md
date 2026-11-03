@@ -135,15 +135,11 @@ network, and SNMP access.
 
 > **Reminder:** `RESTART` the device after changing any setting so the new value is applied.
 
-<br>
-
 #### 4.2.1 Info
 
 The `Info` group provides **maintenance** and **capacity** information.
 
 ![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info.png)
-
-<br>
 
 #### 4.2.2 Config
 
@@ -153,8 +149,6 @@ Use the `Config` group to set the **Polling Interval** and **Debugprint**.
 
 ![Device Console Settings, Config group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_config.png)
 
-<br>
-
 #### 4.2.3 Network
 
 The Network group lets you enable DHCP or configure a static Ethernet IP
@@ -163,8 +157,6 @@ address, netmask, and gateway.
 > **NOTE:** When DHCP is enabled, the static Ethernet address fields are unavailable.
 
 ![Device Console Settings, Network group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_network.png)
-
-<br>
 
 #### 4.2.4 SNMP
 
@@ -181,8 +173,6 @@ You can set the SNMP port, read and write community strings, device description,
 <br>
 
 ![Device Console Settings, SNMPv3 security settings](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_snmp_security_settings.png)
-
-<br>
 
 #### 4.2.4.1 Scalar Instance Object-ID
 
