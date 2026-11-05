@@ -434,20 +434,88 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
 
 ### 5.9 Write Data to Modbus
 
-#### 5.9.1 Write Data Using SNMP
+This section shows how an authorized SNMP client can write a value to a Modbus
+register through the gateway. In this example, `OID_COLUMN 207` identifies the
+configured Modbus write mapping. The SNMP settings used below are configured in
+[Section 4.2.4, SNMP](#424-snmp).
 
-<!-- TODO: Use `OID_COLUMN` `207`. Show the `snmpset` command and its result,
-including screenshots. -->
+> **NOTE:**
+> - The SNMP write command sends the requested value to the connected Modbus
+>   device.
+> - Use this function only for approved control points and only when it is safe
+>   to change the value on the field device.
 
-#### 5.9.2 Verify Written Data
+#### 5.9.1 Read Current Value
 
-<!-- TODO: Verify `OID_COLUMN` `207` in the Device Console and with an
-`snmpget` command. Also show `OID_COLUMN` `65534`, which provides the SNMP
-response messages. Include screenshots of both verification methods. -->
+Before writing a new value, use `snmpget` to read the current value of the
+mapping with `OID_COLUMN` set to `207`.
 
-#### 5.9.3 Reboot Device via Device Console
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0
+```
 
-<!-- TODO: Show the Device Console reboot action, including a screenshot. -->
+![Linux terminal, SNMP get OID 207 before write](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_oid_207_before_write_example.png)
+
+> The current value will be used later to compare with the newly written value.
+
+#### 5.9.2 Write New Value
+
+Use the following command to write the value `4546` to `OID_COLUMN` `207`:
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0 i 4546
+```
+
+![Linux terminal, SNMP set OID 207](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_oid_207_write_example.png)
+
+> **NOTE:**
+> - The `i` specifies that `4546` is an integer value.
+> - The command sends the value to the connected Modbus device.
+
+#### 5.9.3 Verify SNMP Write Response
+
+The gateway also provides a confirmation of the most recent SNMP write through
+`OID_COLUMN` `65534`. Run the following command immediately after the write:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+```
+
+![Linux terminal, SNMP get OID 65534 after write](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_oid_65534_after_write_example.png)
+
+Confirm that the returned response shows `SUCCESS`.
+
+> **NOTE:**
+> - The SNMP write response shows whether the most recent `snmpset` command
+>   succeeded (`SUCCESS`) or failed.
+> - The response remains available for 30 seconds, then resets to `IDLE`.
+> - If the most recent `snmpset` command failed, follow the hint shown in the
+>   response and check the Modbus wiring and configuration before trying again.
+
+#### 5.9.4 Verify Written Data via SNMPGET
+
+Use `snmpget` to confirm the written value through SNMP:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0
+```
+
+![Linux terminal, SNMP get OID 207 after write](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_oid_207_after_write_example.png)
+
+Confirm that the returned value is `4546`.
+
+#### 5.9.5 Verify Written Data in the Device Console
+
+Wait for at least one polling interval after sending the `snmpset` command.
+Then open **Database** in the Device Console and select
+`TABLE_DEVICES_OUTPUT`. Confirm that the entry with `OID_COLUMN` `207` shows
+the new `VALUE` of `4546`.
+
+![Device Console Database, TABLE_DEVICES_OUTPUT OID 207](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devices_output_oid_207.png)
+
+> **NOTE:** Writing a value to a Modbus device does not require the gateway to
+> restart. Restart the gateway only after changing `TABLE_DEVICES_INPUT` or
+> gateway settings.
 
 <br>
 
@@ -463,18 +531,23 @@ and `OID_COLUMN`, with a screenshot. -->
 <!-- TODO: Show the SNMP command used to write the setting and its result,
 including screenshots. -->
 
-#### 5.10.3 Verify Written Setting on the Device Console
+#### 5.10.3 Verify SNMP Write Response
 
-<!-- TODO: Show the written setting in the Device Console, including a
-screenshot. -->
+<!-- TODO: Show `OID_COLUMN` `65534`, which provides the SNMP response message,
+immediately after the SNMP write. Note that the response is available for 30
+seconds before it is reset to `IDLE`. Include a screenshot. -->
 
 #### 5.10.4 Verify Written Setting via SNMPGET
 
 <!-- TODO: Show the `snmpget` command used to verify the written setting and
-its result. Also show `OID_COLUMN` `65534`, which provides the SNMP response
-messages. Include screenshots. -->
+its result, including a screenshot. -->
 
-#### 5.10.5 Reboot Device via SNMP
+#### 5.10.5 Verify Written Setting in the Device Console
+
+<!-- TODO: Show the written setting in the Device Console, including a
+screenshot. -->
+
+#### 5.10.6 Reboot Device via SNMP
 
 <!-- TODO: Show the SNMP command used to reboot the device and its result,
 including screenshots. -->
