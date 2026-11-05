@@ -330,7 +330,7 @@ mapping for each Modbus value that you want to make available through SNMP.
 
 <br>
 
-![Device Console Database, TABLE_DEVICES_INPUT](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devics_input.png)
+![Device Console Database, TABLE_DEVICES_INPUT](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devices_input.png)
 
 
 
