@@ -29,12 +29,12 @@ Go-back-to: [Bookmarks](#bookmarks)
 ---
 1. [COMPLETED] On github, under the `imcase` account, create a __PUBLIC__ repo called `snmp_modbus_gateway_assets`
 2. [COMPLETED] Create an `assets` folder and put all the screenshots in there
-3. [IN_PROGRESS] Create `datasheet.md` with project-specific information, explanations, and guidance.
+3. [COMPLETED] Create `datasheet.md` with project-specific information, explanations, and guidance.
 - [X] __MUST__ include a `Web Console` section:
   - [X] Add a `Database` subsection.
     - [X] State that `TABLE_DEVICES_INPUT` supports a maximum of 30 entries.
   - [X] Add a `Settings` subsection.
-  - [ ] Add a `System` subsection.
+  - [X] Add a `System` subsection.
   - [X] State that all Web Console `Settings` are __retained__ after a restart because they are stored in FLASH.
 - [X] __MUST__ explicitly state that the device must be `restarted after every modification`.
 4. [COMPLETED] __MUST__ document `MD button` handling, including the following reset procedure:
