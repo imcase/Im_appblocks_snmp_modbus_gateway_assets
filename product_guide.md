@@ -147,7 +147,7 @@ The `Info` group displays the device's restart counters and the current and maxi
 
 Use the `Config` group to set the **Polling Interval** and **Debugprint**.
 
-> **NOTE:** Adjust the `Polling Interval` to suit your application requirements.
+> Adjust the `Polling Interval` to suit your application requirements.
 
 ![Device Console Settings, Config group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_config.png)
 
@@ -204,8 +204,8 @@ The `System` area lets you restart the device or restore its default settings.
 
 Click **Reboot Device** to restart the device.
 
-> **NOTE:** Restart the device after changing `TABLE_DEVICES_INPUT` or Device
-> Console settings so that the new configuration is applied.
+> Restart the device after changing `TABLE_DEVICES_INPUT` or Device Console
+> settings to apply the new configuration.
 
 #### 4.3.2 Initialize Settings
 
@@ -282,7 +282,7 @@ Open **Settings** in the Device Console. Review the network, SNMP, and polling
 settings required for your installation. Restart the device after making any
 changes so that the new settings are applied.
 
-> **NOTE:** For an overview of the available settings, see [Section 4.2, Settings](#42-settings).
+> For an overview of the available settings, see [Section 4.2, Settings](#42-settings).
 
 #### 5.4.1 Polling Interval
 
@@ -299,7 +299,7 @@ group:
 - Leave **DHCP** disabled to use a static IP address, then enter the IP address,
   netmask, and gateway supplied by your network administrator.
 
-> **NOTE:** This guide uses `192.168.1.40` throughout the example.
+> This guide uses `192.168.1.40` throughout the example.
 
 
 After changing the network settings and restarting the device, reconnect to
@@ -314,7 +314,7 @@ SNMPv3 user and security settings, as required by your organization.
 Enable write access only when it is required for approved control points. Use
 credentials and security settings approved by your organization.
 
-> **NOTE:** This guide uses the default SNMP settings throughout the example.
+> This guide uses the default SNMP settings throughout the example.
 
 <br>
 
@@ -471,9 +471,7 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0 i 4546
 
 ![Linux terminal, SNMP set OID 207](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_oid_207_write_example.png)
 
-> **NOTE:**
-> - The `i` specifies that `4546` is an integer value.
-> - The command sends the value to the connected Modbus device.
+> The command sends the value to the connected Modbus device.
 
 #### 5.9.3 Verify SNMP Write Response
 
@@ -543,7 +541,7 @@ and note its `OID_COLUMN`.
 > - Device settings can be changed through the Device Console or SNMP.
 
 
-#### 5.10.2 Write Setting Using SNMP
+#### 5.10.2 Write Network Settings Using SNMP
 
 Most installations use a static IP address that matches the local network. For
 example, configure the device with the following settings:
@@ -560,44 +558,95 @@ The marked rows below identify these settings and their `OID_COLUMN` values.
 Send the following commands one at a time. The commands use the device's
 current IP address, `192.168.1.40`.
 
+> After each `snmpset` command, run the response command within 30 seconds to confirm that the write succeeded.
+
+##### 5.10.2.1 Disable DHCP
+
+Disable DHCP:
+
 ```bash
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65503.0 s disabled
 ```
+
+Immediately verify the response:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+```
+
+Confirm that the returned response shows `SUCCESS`.
+
+<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
+including a screenshot. -->
+
+##### 5.10.2.2 Set the IP Address
+
+Set the device IP address:
 
 ```bash
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65505.0 s 192.168.1.121
 ```
 
+Immediately verify the response:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+```
+
+Confirm that the returned response shows `SUCCESS`.
+
+<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
+including a screenshot. -->
+
+##### 5.10.2.3 Set the Subnet Mask
+
+Set the subnet mask:
+
 ```bash
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65506.0 s 255.255.255.0
 ```
+
+Immediately verify the response:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+```
+
+Confirm that the returned response shows `SUCCESS`.
+
+<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
+including a screenshot. -->
+
+##### 5.10.2.4 Set the Gateway Address
+
+Set the gateway address:
 
 ```bash
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65504.0 s 192.168.1.1
 ```
 
-> **NOTE:** The `s` specifies that each value is a text string.
+Immediately verify the response:
 
-<!-- TODO: Show the four `snmpset` commands and their results, including
-screenshots. -->
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+```
 
-#### 5.10.3 Verify SNMP Write Response
+Confirm that the returned response shows `SUCCESS`.
 
-<!-- TODO: Show `OID_COLUMN` `65534`, which provides the SNMP response message,
-immediately after the SNMP write. Note that the response is available for 30
-seconds before it is reset to `IDLE`. Include a screenshot. -->
+<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
+including a screenshot. -->
 
-#### 5.10.4 Verify Written Setting via SNMPGET
+#### 5.10.3 Verify Written Settings via SNMPGET
 
-<!-- TODO: Show the `snmpget` command used to verify the written setting and
-its result, including a screenshot. -->
+<!-- TODO: Show the `snmpget` commands used to verify the written settings and
+their results, including a screenshot. -->
 
-#### 5.10.5 Verify Written Setting in the Device Console
+#### 5.10.4 Verify Written Settings in the Device Console
 
-<!-- TODO: Show the written setting in the Device Console, including a
+<!-- TODO: Show the written settings in the Device Console, including a
 screenshot. -->
 
-#### 5.10.6 Reboot Device via SNMP
+#### 5.10.5 Reboot Device via SNMP
 
 <!-- TODO: Show the SNMP command used to reboot the device and its result,
 including screenshots. -->
