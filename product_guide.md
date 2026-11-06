@@ -568,16 +568,17 @@ Disable DHCP:
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65503.0 s disabled
 ```
 
+![Linux terminal, SNMP set NET_DHCP](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_netdhcp_example.png)
+
 Immediately verify the response:
 
 ```bash
 snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 ```
 
-Confirm that the returned response shows `SUCCESS`.
+![Linux terminal, SNMP response after setting NET_DHCP](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_netdhcp_response_example.png)
 
-<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
-including a screenshot. -->
+Confirm that the returned response shows `SUCCESS`.
 
 ##### 5.10.2.2 Set the IP Address
 
@@ -587,16 +588,17 @@ Set the device IP address:
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65505.0 s 192.168.1.121
 ```
 
+![Linux terminal, SNMP set NET_IP](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_netip_example.png)
+
 Immediately verify the response:
 
 ```bash
 snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 ```
 
-Confirm that the returned response shows `SUCCESS`.
+![Linux terminal, SNMP response after setting NET_IP](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_netip_response_example.png)
 
-<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
-including a screenshot. -->
+Confirm that the returned response shows `SUCCESS`.
 
 ##### 5.10.2.3 Set the Subnet Mask
 
@@ -606,16 +608,17 @@ Set the subnet mask:
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65506.0 s 255.255.255.0
 ```
 
+![Linux terminal, SNMP set NET_MASK](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_netmask_example.png)
+
 Immediately verify the response:
 
 ```bash
 snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 ```
 
-Confirm that the returned response shows `SUCCESS`.
+![Linux terminal, SNMP response after setting NET_MASK](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_netmask_response_example.png)
 
-<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
-including a screenshot. -->
+Confirm that the returned response shows `SUCCESS`.
 
 ##### 5.10.2.4 Set the Gateway Address
 
@@ -625,16 +628,17 @@ Set the gateway address:
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65504.0 s 192.168.1.1
 ```
 
+![Linux terminal, SNMP set NET_GATEWAY](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_netgateway_example.png)
+
 Immediately verify the response:
 
 ```bash
 snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 ```
 
-Confirm that the returned response shows `SUCCESS`.
+![Linux terminal, SNMP response after setting NET_GATEWAY](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_netgateway_response_example.png)
 
-<!-- TODO: Show the `snmpset` command and its `OID_COLUMN` `65534` response,
-including a screenshot. -->
+Confirm that the returned response shows `SUCCESS`.
 
 #### 5.10.3 Verify Written Settings via SNMPGET
 
