@@ -255,7 +255,7 @@ documentation for the required power and communication connections.
 
 ![Connecting the BP#02 sensor to the TPP2W(G2)](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/tpp2wg2_modbus.png)
 
-Should you be interested, more Tibbo Modbus models are available [here](https://tibbo.com/store/rs485-modbus-sensors.html).
+> **TIP:** More Tibbo RS-485 Modbus sensor models are available [here](https://tibbo.com/store/rs485-modbus-sensors.html).
 
 <br>
 
@@ -677,8 +677,53 @@ In the Device Console:
 
 #### 5.10.5 Reboot Device via SNMP
 
-<!-- TODO: Show the SNMP command used to reboot the device and its result,
-including screenshots. -->
+To apply the changed settings, send two reboot signals within 10 seconds. The
+reboot setting is `SYS_REBOOT_DEVICE`, with OID column `65520`.
+
+![Device Console Database, SYS_REBOOT_DEVICE setting](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_settings_system_reboot.png)
+
+##### 5.10.5.1 Send 1st Reboot Signal
+
+Send the first reboot signal:
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
+```
+
+The device does not reboot after this first signal. It starts a 10-second
+confirmation window for the second signal.
+
+<!-- TODO: Add a terminal screenshot of the first reboot `snmpset` command. -->
+
+##### 5.10.5.2 Verify 1st Reboot Signal
+
+Immediately check the response and reboot setting:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0
+```
+
+Confirm that the response OID column `65534` reports `SUCCESS`, and that
+`SYS_REBOOT_DEVICE` (OID column `65520`) reports `true (1/2)`.
+
+<!-- TODO: Add a terminal screenshot showing the first reboot response and
+     SYS_REBOOT_DEVICE value. -->
+
+##### 5.10.5.3 Send 2nd Reboot Signal within 10 Seconds
+
+Within 10 seconds of the first signal, send the same command again:
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
+```
+
+> **NOTE:**
+> - The device now restarts and can stop responding before an SNMP response is received. 
+> - Allow it to come back online before connecting to its new IP address.
+
+<!-- TODO: Add a terminal screenshot of the second reboot `snmpset` command
+     and the resulting connection loss or reboot. -->
 
 
 
