@@ -65,7 +65,7 @@ Modbus equipment instead of being limited to a single sensor or meter.
 > - Out of the box, the device uses the **default** static IP address
 > `192.168.1.40`. This placeholder makes the device reachable on first
 > power-up; change it to match your network.
-> - A **network connection** is required for communication between the gateway
+> - A **network connection** is required for communication between the device
 > and its configured SNTP servers, as well as authorized SNMP managers.
 
 <br><br>
@@ -94,10 +94,10 @@ your SNMP monitoring system.
 
 > **NOTE:**
 > - Use `TABLE_DEVICES_INPUT` to define which Modbus values the gateway monitors.
-> - `TABLE_DEVICES_OUTPUT` shows the current polling results; it is a live view, not a saved history, and is rebuilt after restart.
+> - `TABLE_DEVICES_OUTPUT` shows the latest polling results. It is not saved and is rebuilt after each restart.
 > - `TABLE_SETTINGS` contains the settings used by the Device Console.
-> - **After any change to `TABLE_DEVICES_INPUT`, or to `Settings` through the Device Console or SNMP, restart the device.**
-> The change is retained immediately, but the polling engine does not apply it until the device restarts.
+> - **Restart the device after changing `TABLE_DEVICES_INPUT` or a Setting**. Changes are saved immediately but take
+>   effect only after restart.
 
 <br>
 
@@ -121,9 +121,9 @@ tables.
 
 > **NOTE:**
 > - **Register addressing and value interpretation:**
-> Enter the register number exactly as shown in the connected device's Modbus
+> Enter the register address (REG_ADDR) exactly as shown in the connected Modbus device's
 > register map.
-> - **Warning:** If the register address is incorrect, the gateway may not receive a result
+> - **Warning:** If the register address (REG_ADDR) is incorrect, the gateway may not receive a result
 > when polling the Modbus device.
 
 <br>
@@ -133,11 +133,13 @@ tables.
 Use the Settings area to review device information and configure polling,
 network, and SNMP access. 
 
-> **Reminder:** `RESTART` the device after changing any setting so the new value is applied.
+> **Reminder:**
+> - Restart the device after changing a setting.
+> - The new value takes effect after restart.
 
 #### 4.2.1 Info
 
-The `Info` group provides **maintenance** and **capacity** information.
+The `Info` group displays the device's restart counters and the current and maximum number of `TABLE_DEVICES_INPUT` records.
 
 ![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info.png)
 
@@ -154,7 +156,10 @@ Use the `Config` group to set the **Polling Interval** and **Debugprint**.
 The Network group lets you enable DHCP or configure a static Ethernet IP
 address, netmask, and gateway.
 
-> **NOTE:** When DHCP is enabled, the static Ethernet address fields are unavailable.
+> **NOTE:**
+> - When DHCP is enabled, the static Ethernet address fields are **Unavailable**.
+> - DHCP may assign a different IP address and interrupt your Device Console connection.
+> - To keep the device reachable at a known address, a **static** IP address is recommended.
 
 ![Device Console Settings, Network group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_network.png)
 
@@ -167,8 +172,7 @@ You can set the SNMP port, read and write community strings, device description,
 
 > **NOTE:**
 > - **Read:** Use SNMP monitoring software to read gateway values with `snmpget` or `snmpwalk`.
-> - **Write:** Authorized SNMP clients can configure __ALL__ gateway SNMP objects with `snmpset`.
-> - Before deploying the gateway, use credentials and security settings approved by your organization.
+> - **Write:** Authorized SNMP clients can configure **ALL** gateway SNMP objects with `snmpset`.
 
 <br>
 
@@ -184,8 +188,8 @@ Its composition is:
 ```
 
 > **NOTE:**
-> - By default, `sysObjectID` is set to `1.3.6.1.4.1.20738`. It may be
->   extended with a child OID, for example `1.3.6.1.4.1.20738.45.46`.
+> - By default, `sysObjectID` is set to `1.3.6.1.4.1.20738`.
+> - The `sysObjectID` may be extended with a child OID, such as `45.46`, to create `1.3.6.1.4.1.20738.45.46`.
 > - The final `.0` is required when querying an individual value.
 > - Each `OID_COLUMN` value must be **UNIQUE**.
 > - To minimize mistakes, use the full OID returned by `snmpwalk`.
@@ -194,26 +198,25 @@ Its composition is:
 
 ### 4.3 System
 
-The `System` area provides two device-management actions: **Reboot Device**
-and **Initialize Settings**.
+The `System` area lets you restart the device or restore its default settings.
 
 #### 4.3.1 Reboot Device
 
-Use **Reboot Device** to restart the device.
+Click **Reboot Device** to restart the device.
 
-> Restart the device after changing `TABLE_DEVICES_INPUT` or Device Console
-> Settings so the new configuration is applied.
+> **NOTE:** Restart the device after changing `TABLE_DEVICES_INPUT` or Device
+> Console settings so that the new configuration is applied.
 
 #### 4.3.2 Initialize Settings
 
-Use **Initialize Settings** to restore the device's configuration to its factory default settings.
+Click **Initialize Settings** to restore the device's default configuration.
 
 > **MD-button:**
 >
 > You can also restore the default settings using the on-board **MD button**:
 >
 > - Press and hold the button for at least **5 seconds**, then release it.
-> - Releasing the button _before_ 5 seconds have elapsed has _no effect_.
+> - Releasing the button *before* 5 seconds have elapsed has **no effect**.
 
 <br>
 
@@ -226,23 +229,23 @@ Use **Initialize Settings** to restore the device's configuration to its factory
 
 ## 5. Deployment Example
 
-This example shows how to connect a Modbus device to the gateway, configure one
-Modbus value for polling, and make that value available to an SNMP monitoring
-system using `snmpwalk`.
+This example shows how to connect a Modbus device to the gateway, configure a
+Modbus value for polling, and read it through an SNMP monitoring system using
+`snmpwalk`.
 
-It also includes a brief SNMP write example, showing how an authorized client
-can use `snmpset` to write a Modbus value and update a gateway setting.
+It also demonstrates how an authorized SNMP client can use `snmpset` to write
+a Modbus value and change a device setting.
 
 <br>
 
 ### 5.1 Connect the Modbus BP#02 to the Gateway
 
-This example uses a Tibbo Modbus BP#02, an ambient-temperature and
-relative-humidity sensor. The BP#02 is used only as an example: you can
-connect another compatible Modbus device instead.
+The deployment steps use a Tibbo Modbus BP#02, a sensor for ambient temperature
+and relative humidity. The BP#02 is only used as an example; you can connect
+another compatible Modbus device instead.
 
 > **IMPORTANT:** Before replacing a Modbus sensor or changing its wiring,
-> disconnect power from the gateway. Reconnect power only after the new sensor
+> disconnect power from the device. Reconnect power only after the new sensor
 > and all wiring have been connected correctly.
 
 Connect the BP#02 to the TPP2W(G2) as shown below. Connect each wire to the
@@ -258,8 +261,8 @@ Should you be interested, more Tibbo Modbus models are available [here](https://
 
 ### 5.2 Connect the Network Cable and Power Adapter
 
-Connect an Ethernet cable from the gateway's RJ45 port to your local network.
-Then connect the supplied power adapter to the gateway. The gateway starts when
+Connect an Ethernet cable from the device's RJ45 port to your local network.
+Then connect the supplied power adapter to the device. The device starts when
 power is connected. Allow up to 20 seconds for the device to fully boot and
 become ready for use.
 
@@ -276,21 +279,21 @@ Using your preferred web browser, navigate to [http://192.168.1.40](http://192.1
 ### 5.4 Configure Settings
 
 Open **Settings** in the Device Console. Review the network, SNMP, and polling
-settings required for your installation. Restart the gateway after making any
+settings required for your installation. Restart the device after making any
 changes so that the new settings are applied.
 
 > **NOTE:** For an overview of the available settings, see [Section 4.2, Settings](#42-settings).
 
 #### 5.4.1 Polling Interval
 
-In the **Config** group, set the **Polling Interval** to the value that suits
-your application. This setting determines how often the gateway reads values
-from the connected Modbus device.
+Set the **Polling Interval** in the **Config** group to a value that suits your
+application. This setting determines how often the gateway reads values from
+the connected Modbus device.
 
 #### 5.4.2 Network
 
-In the **Network** group, choose the network method required by your
-installation:
+Choose the network method required by your installation in the **Network**
+group:
 
 - Enable **DHCP** if your network automatically assigns IP addresses.
 - Leave **DHCP** disabled to use a static IP address, then enter the IP address,
@@ -299,14 +302,14 @@ installation:
 > **NOTE:** This guide uses `192.168.1.40` throughout the example.
 
 
-After changing the network settings and restarting the gateway, reconnect to
+After changing the network settings and restarting the device, reconnect to
 the Device Console using its new IP address.
 
 #### 5.4.3 SNMP
 
-In the **SNMP** group, configure the SNMP port and access credentials required
-by your monitoring system. Configure either SNMPv2c community strings or SNMPv3
-user and security settings, as required by your organization.
+Configure the SNMP port and access credentials required by your monitoring
+system in the **SNMP** group. Configure either SNMPv2c community strings or
+SNMPv3 user and security settings, as required by your organization.
 
 Enable write access only when it is required for approved control points. Use
 credentials and security settings approved by your organization.
@@ -376,10 +379,10 @@ Use `snmpwalk` to view **ALL** SNMP values available under the gateway's
 `SysObjectID`.
 
 ```text
-snmpwalk -v2c -c <read-community> <gateway-ip> <SysObjectID>
+snmpwalk -v2c -c <read-community> <device-ip> <SysObjectID>
 ```
 
-For this example, use the configured read community, gateway IP address, and
+For this example, use the configured read community, device IP address, and
 `SysObjectID`:
 
 ```bash
@@ -408,7 +411,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
 
 > **NOTE:**
 > - Replace `public`, `192.168.1.40`, and `1.3.6.1.4.1.20738.45.46` when
->   the corresponding settings of your gateway are different.
+>   the corresponding settings of your device are different.
 > - SNMPv3 can also be used. Use the username, authentication settings, and
 >   privacy settings configured in the Device Console. The general command
 >   format is:
@@ -416,13 +419,13 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
 >   ```text
 >   snmpwalk -v3 -l authPriv -u <username> -a <auth-protocol> \
 >     -A <authentication-password> -x <privacy-protocol> \
->     -X <privacy-password> <gateway-ip> <SysObjectID>
+>     -X <privacy-password> <device-ip> <SysObjectID>
 >   ```
 >
 >   ```text
 >   snmpget -v3 -l authPriv -u <username> -a <auth-protocol> \
 >     -A <authentication-password> -x <privacy-protocol> \
->     -X <privacy-password> <gateway-ip> <SysObjectID>.1.<OID_COLUMN>.0
+>     -X <privacy-password> <device-ip> <SysObjectID>.1.<OID_COLUMN>.0
 >   ```
 >
 > - Other SNMP tools can be used instead of the Linux command line. For
@@ -489,7 +492,7 @@ Confirm that the returned response shows `SUCCESS`.
 > - The SNMP write response shows whether the most recent `snmpset` command
 >   succeeded (`SUCCESS`) or failed.
 > - The response remains available for 30 seconds, then resets to `IDLE`.
-> - If the most recent `snmpset` command failed, follow the hint shown in the
+> - If the most recent `snmpset` command **failed**, follow the hint shown in the
 >   response and check the Modbus wiring and configuration before trying again.
 
 #### 5.9.4 Verify Written Data via SNMPGET
@@ -513,20 +516,45 @@ the new `VALUE` of `4546`.
 
 ![Device Console Database, TABLE_DEVICES_OUTPUT OID 207](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devices_output_oid_207.png)
 
-> **NOTE:** Writing a value to a Modbus device does not require the gateway to
-> restart. Restart the gateway only after changing `TABLE_DEVICES_INPUT` or
-> gateway settings.
+> **NOTE:**
+> - `TABLE_DEVICES_OUTPUT` is READ-ONLY and does not update automatically.
+>   Click **Refresh** to update the displayed data.
+> - Modbus writes take effect immediately. Restarting the device is therefore
+>   NOT necessary.
 
 <br>
 
 ### 5.10 Change Settings via SNMP
 
+Authorized SNMP clients can change device settings. Each setting is identified
+in `TABLE_SETTINGS` by its `OID_COLUMN`.
+
+> **NOTE:**
+> - Changing network or SNMP settings **can interrupt your connection** to the device.
+> - A changed device setting is **NOT** applied until the device restarts.
+
 #### 5.10.1 Review the Setting in `TABLE_SETTINGS`
 
-<!-- TODO: Show `TABLE_SETTINGS`, including the setting name, current value,
-and `OID_COLUMN`, with a screenshot. -->
+In **Database**, select `TABLE_SETTINGS`. Locate the setting you want to change
+and note its `OID_COLUMN`.
+
+> **NOTE:**
+> - `TABLE_SETTINGS` is read-only.
+> - Device settings can be changed through the Device Console or SNMP.
+
 
 #### 5.10.2 Write Setting Using SNMP
+
+Most installations use a static IP address that matches the local network. For
+example, configure the device with the following settings:
+
+- `NET_DHCP` to `disabled`
+- `NET_IP` to `192.168.1.121`
+- `NET_GATEWAY` to `192.168.1.1`
+
+The marked rows below identify these settings and their `OID_COLUMN` values.
+
+![Device Console Database, TABLE_SETTINGS network settings](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_settings_network.png)
 
 <!-- TODO: Show the SNMP command used to write the setting and its result,
 including screenshots. -->
@@ -565,7 +593,7 @@ including screenshots. -->
 2. Install and verify the RS-485 hardware and field wiring.
 3. Configure Ethernet addressing for the local network and limit management
    access to authorized hosts.
-4. Create the Modbus-to-SNMP mappings and restart the gateway if required.
+4. Create the Modbus-to-SNMP mappings and restart the device if required.
 5. Prove the southbound path first: confirm that the gateway successfully
    polls the expected raw Modbus value.
 6. From an SNMP manager, walk the private enterprise branch and use the exact
