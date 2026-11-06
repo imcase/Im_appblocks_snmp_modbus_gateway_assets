@@ -550,14 +550,36 @@ example, configure the device with the following settings:
 
 - `NET_DHCP` to `disabled`
 - `NET_IP` to `192.168.1.121`
+- `NET_MASK` to `255.255.255.0`
 - `NET_GATEWAY` to `192.168.1.1`
 
 The marked rows below identify these settings and their `OID_COLUMN` values.
 
 ![Device Console Database, TABLE_SETTINGS network settings](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_settings_network.png)
 
-<!-- TODO: Show the SNMP command used to write the setting and its result,
-including screenshots. -->
+Send the following commands one at a time. The commands use the device's
+current IP address, `192.168.1.40`.
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65503.0 s disabled
+```
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65505.0 s 192.168.1.121
+```
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65506.0 s 255.255.255.0
+```
+
+```bash
+snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65504.0 s 192.168.1.1
+```
+
+> **NOTE:** The `s` specifies that each value is a text string.
+
+<!-- TODO: Show the four `snmpset` commands and their results, including
+screenshots. -->
 
 #### 5.10.3 Verify SNMP Write Response
 
