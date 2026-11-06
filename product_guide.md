@@ -642,13 +642,38 @@ Confirm that the returned response shows `SUCCESS`.
 
 #### 5.10.3 Verify Written Settings via SNMPGET
 
-<!-- TODO: Show the `snmpget` commands used to verify the written settings and
-their results, including a screenshot. -->
+To verify that the settings have changed correctly, use the following commands:
+
+```bash
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65503.0
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65505.0
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65506.0
+snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65504.0
+```
+
+> The current IP address `192.168.1.40` is used because the new address does
+> **not** take effect until the device restarts.
+
+The results of the above commands are shown here:
+
+![Linux terminal, SNMP get network settings](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_network_example.png)
+
+> The settings are stored but are not active until the device restarts.
 
 #### 5.10.4 Verify Written Settings in the Device Console
 
-<!-- TODO: Show the written settings in the Device Console, including a
-screenshot. -->
+In the Device Console:
+
+1. Select **Settings**.
+2. Open the **Network** tab.
+3. Click **Refresh** to load the stored settings.
+4. Confirm that Ethernet DHCP is **Disabled** and that the Ethernet IP,
+   Netmask, and Gateway fields show the values written in
+   [5.10.2](#5102-write-network-settings-using-snmp).
+
+![Device Console Settings, Network settings written via SNMP](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_network_example.png)
+
+> The settings are stored but are not active until the device restarts.
 
 #### 5.10.5 Reboot Device via SNMP
 
