@@ -690,10 +690,10 @@ Send the first reboot signal:
 snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 ```
 
-The device does not reboot after this first signal. It starts a 10-second
-confirmation window for the second signal.
+![Linux terminal, SNMP set first reboot signal](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpset_reboot_device_example.png)
 
-<!-- TODO: Add a terminal screenshot of the first reboot `snmpset` command. -->
+> The device does not reboot after this first signal. It starts a 10-second
+> confirmation window for the second signal.
 
 ##### 5.10.5.2 Verify 1st Reboot Signal
 
@@ -707,8 +707,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0
 Confirm that the response OID column `65534` reports `SUCCESS`, and that
 `SYS_REBOOT_DEVICE` (OID column `65520`) reports `true (1/2)`.
 
-<!-- TODO: Add a terminal screenshot showing the first reboot response and
-     SYS_REBOOT_DEVICE value. -->
+![Linux terminal, SNMP get first reboot signal response](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_reboot_device_example.png)
 
 ##### 5.10.5.3 Send 2nd Reboot Signal within 10 Seconds
 
