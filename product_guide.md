@@ -1,11 +1,64 @@
 > **Firmware:** `SNMP_Modbus_Gateway` v1.0.2  
 > **Platform:** Tibbo TPP2W(G2) in a TPB2L(G2) enclosure
 
+## Bookmarks
+
+- [1. Overview](#1-overview)
+- [2. Hardware](#2-hardware)
+- [3. Network configuration and services](#3-network-configuration-and-services)
+- [4. Device Console](#4-device-console)
+  - [4.1 Database](#41-database)
+  - [Column reference](#column-reference)
+  - [4.2 Settings](#42-settings)
+    - [4.2.1 Info](#421-info)
+    - [4.2.2 Config](#422-config)
+    - [4.2.3 Network](#423-network)
+    - [4.2.4 SNMP](#424-snmp)
+    - [4.2.4.1 Scalar Instance Object-ID](#4241-scalar-instance-object-id)
+  - [4.3 System](#43-system)
+    - [4.3.1 Reboot Device](#431-reboot-device)
+    - [4.3.2 Initialize Settings](#432-initialize-settings)
+- [5. Deployment Example](#5-deployment-example)
+  - [5.1 Connect the Modbus BP#02 to the Gateway](#51-connect-the-modbus-bp02-to-the-gateway)
+  - [5.2 Connect the Network Cable and Power Adapter](#52-connect-the-network-cable-and-power-adapter)
+  - [5.3 Connect to the Device Console](#53-connect-to-the-device-console)
+  - [5.4 Configure Settings](#54-configure-settings)
+    - [5.4.1 Polling Interval](#541-polling-interval)
+    - [5.4.2 Network](#542-network)
+    - [5.4.3 SNMP](#543-snmp)
+  - [5.5 Configure Modbus Mapping](#55-configure-modbus-mapping-in-table_devices_input)
+  - [5.6 Restart Device](#56-restart-device)
+  - [5.7 Verify Modbus Polled Data in `TABLE_DEVICES_OUTPUT`](#57-verify-modbus-polled-data-in-table_devices_output)
+  - [5.8 Verify Modbus Polled Data via SNMP](#58-verify-modbus-polled-data-via-snmp)
+  - [5.9 Write Data to Modbus](#59-write-data-to-modbus)
+    - [5.9.1 Read Current Value](#591-read-current-value)
+    - [5.9.2 Write New Value](#592-write-new-value)
+    - [5.9.3 Verify SNMP Write Response](#593-verify-snmp-write-response)
+    - [5.9.4 Verify Written Data via SNMPGET](#594-verify-written-data-via-snmpget)
+    - [5.9.5 Verify Written Data in the Device Console](#595-verify-written-data-in-the-device-console)
+  - [5.10 Change Settings via SNMP](#510-change-settings-via-snmp)
+    - [5.10.1 Review the Setting in `TABLE_SETTINGS`](#5101-review-the-setting-in-table_settings)
+    - [5.10.2 Write Network Settings Using SNMP](#5102-write-network-settings-using-snmp)
+      - [5.10.2.1 Disable DHCP](#51021-disable-dhcp)
+      - [5.10.2.2 Set the IP Address](#51022-set-the-ip-address)
+      - [5.10.2.3 Set the Subnet Mask](#51023-set-the-subnet-mask)
+      - [5.10.2.4 Set the Gateway Address](#51024-set-the-gateway-address)
+    - [5.10.3 Verify Written Settings via SNMPGET](#5103-verify-written-settings-via-snmpget)
+    - [5.10.4 Verify Written Settings in the Device Console](#5104-verify-written-settings-in-the-device-console)
+    - [5.10.5 Reboot Device via SNMP](#5105-reboot-device-via-snmp)
+      - [5.10.5.1 Send 1st Reboot Signal](#51051-send-1st-reboot-signal)
+      - [5.10.5.2 Verify 1st Reboot Signal](#51052-verify-1st-reboot-signal)
+      - [5.10.5.3 Send 2nd Reboot Signal within 10 Seconds](#51053-send-2nd-reboot-signal-within-10-seconds)
+- [6. Commissioning checklist](#6-commissioning-checklist)
+- [7. Troubleshooting](#7-troubleshooting)
+
 <br><br>
 
 ---
 
 ## 1. Overview
+
+[Back to Bookmarks](#bookmarks)
 
 The SNMP–Modbus Gateway lets **SNMP monitoring software read** values from
 **Modbus equipment** over **Ethernet**. It is used when equipment such as meters, sensors, 
@@ -32,6 +85,8 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 ## 2. Hardware
 
+[Back to Bookmarks](#bookmarks)
+
 | Item | Detail |
 | --- | --- |
 | Controller | Tibbo TPP2W(G2) Tibbo Project PCB |
@@ -51,6 +106,8 @@ Modbus equipment instead of being limited to a single sensor or meter.
 ---
 
 ## 3. Network configuration and services
+
+[Back to Bookmarks](#bookmarks)
 
 | Item | Setting |
 | --- | --- |
@@ -74,12 +131,17 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 ## 4. Device Console
 
+[Back to Bookmarks](#bookmarks)
+
 > The browser-based configuration interface is called the **Device Console**. It
 > may also be referred to as the Web Console in AppBlocks documentation.
 
 <br>
 
 ### 4.1 Database
+
+[Back to Bookmarks](#bookmarks)
+
 For every value you want to monitor, configure the gateway with the relevant Modbus device and register.
 The gateway reads that register at the **configured polling interval** and makes the latest value available to
 your SNMP monitoring system.
@@ -129,6 +191,8 @@ tables.
 <br>
 
 ### 4.2 Settings
+
+[Back to Bookmarks](#bookmarks)
 
 Use the Settings area to review device information and configure polling,
 network, and SNMP access. 
@@ -199,6 +263,8 @@ Its composition is:
 
 ### 4.3 System
 
+[Back to Bookmarks](#bookmarks)
+
 The `System` area lets you restart the device or restore its default settings.
 
 #### 4.3.1 Reboot Device
@@ -233,6 +299,8 @@ Click **Initialize Settings** to restore the device's default configuration.
 
 ## 5. Deployment Example
 
+[Back to Bookmarks](#bookmarks)
+
 This example shows how to connect a Modbus device to the gateway, configure a
 Modbus value for polling, and read it through an SNMP monitoring system using
 `snmpwalk`.
@@ -243,6 +311,8 @@ a Modbus value and change a device setting.
 <br>
 
 ### 5.1 Connect the Modbus BP#02 to the Gateway
+
+[Back to Bookmarks](#bookmarks)
 
 The deployment steps use a Tibbo Modbus BP#02, a sensor for ambient temperature
 and relative humidity. The BP#02 is only used as an example; you can connect
@@ -265,6 +335,8 @@ documentation for the required power and communication connections.
 
 ### 5.2 Connect the Network Cable and Power Adapter
 
+[Back to Bookmarks](#bookmarks)
+
 Connect an Ethernet cable from the device's RJ45 port to your local network.
 Then connect the supplied power adapter to the device. The device starts when
 power is connected. Allow up to 20 seconds for the device to fully boot and
@@ -274,6 +346,8 @@ become ready for use.
 
 ### 5.3 Connect to the Device Console
 
+[Back to Bookmarks](#bookmarks)
+
 Using your preferred web browser, navigate to [http://192.168.1.40](http://192.168.1.40). The **Home** page should be displayed.
 
 ![Device Console, Home area](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_home.png)
@@ -281,6 +355,8 @@ Using your preferred web browser, navigate to [http://192.168.1.40](http://192.1
 <br>
 
 ### 5.4 Configure Settings
+
+[Back to Bookmarks](#bookmarks)
 
 Open **Settings** in the Device Console. Review the network, SNMP, and polling
 settings required for your installation. Restart the device after making any
@@ -324,6 +400,8 @@ credentials and security settings approved by your organization.
 
 ### 5.5 Configure Modbus Mapping in `TABLE_DEVICES_INPUT`
 
+[Back to Bookmarks](#bookmarks)
+
 Open **Database** in the Device Console. In `TABLE_DEVICES_INPUT`, add a
 mapping for each Modbus value that you want to make available through SNMP.
 
@@ -346,6 +424,8 @@ mapping for each Modbus value that you want to make available through SNMP.
 
 ### 5.6 Restart Device
 
+[Back to Bookmarks](#bookmarks)
+
 Restart the device so that the new configuration is applied. Allow up to 20
 seconds for the device to fully boot and become ready for use.
 
@@ -353,6 +433,8 @@ seconds for the device to fully boot and become ready for use.
 <br>
 
 ### 5.7 Verify Modbus Polled Data in `TABLE_DEVICES_OUTPUT`
+
+[Back to Bookmarks](#bookmarks)
 
 In **Database**, select `TABLE_DEVICES_OUTPUT`. Confirm that the mapping
 configured in `TABLE_DEVICES_INPUT` appears in this table and that its `VALUE`
@@ -376,6 +458,8 @@ results, updated at the configured polling interval.
 <br>
 
 ### 5.8 Verify Modbus Polled Data via SNMP
+
+[Back to Bookmarks](#bookmarks)
 
 This example uses a Linux computer and SNMPv2c to read the Modbus value
 published by the gateway. The SNMP settings used below are configured in
@@ -442,6 +526,8 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
 <br>
 
 ### 5.9 Write Data to Modbus
+
+[Back to Bookmarks](#bookmarks)
 
 This section shows how an authorized SNMP client can write a value to a Modbus
 register through the gateway. In this example, `OID_COLUMN 207` identifies the
@@ -529,6 +615,8 @@ the new `VALUE` of `4546`.
 <br>
 
 ### 5.10 Change Settings via SNMP
+
+[Back to Bookmarks](#bookmarks)
 
 Authorized SNMP clients can change device settings. Each setting is identified
 in `TABLE_SETTINGS` by its `OID_COLUMN`.
@@ -738,6 +826,8 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 
 ## 6. Commissioning checklist
 
+[Back to Bookmarks](#bookmarks)
+
 1. Install and check the RS-485 wiring.
 2. Connect the Ethernet cable and power adapter. Wait for the device to boot.
 3. Open the Device Console at the device's current IP address.
@@ -770,6 +860,8 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 ---
 
 ## 7. Troubleshooting
+
+[Back to Bookmarks](#bookmarks)
 
 | Symptom | Checks |
 | --- | --- |

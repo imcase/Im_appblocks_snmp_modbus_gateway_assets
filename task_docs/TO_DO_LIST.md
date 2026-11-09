@@ -40,14 +40,15 @@ Go-back-to: [Bookmarks](#bookmarks)
 4. [COMPLETED] __MUST__ document `MD button` handling, including the following reset procedure:
 
 5. [COMPLETED] __MUST__ add an example showing from start to end how to use the device
-- [ ] Do NOT forget an example of `snmpwalk`, `snmpget`, and `snmpset`
-- [ ] Do __NOT__ forget to also use an example with `reboot_device`
+- [X] Do NOT forget an example of `snmpwalk`, `snmpget`, and `snmpset`
+- [X] Do __NOT__ forget to also use an example with `reboot_device`
 **NOTE:** this is important because the customer should be aware that they have to trigger `reboot_device` twice within `10 seconds` or this to take effect
+6. [COMPLETED] Add bookmarks at the top for quick navigation to chapters and sub-chapters
 
-6. [PENDING] Once `product_guide.md` is completed, copy the content to `AppBlocks app: SNMP_Modbus_Gateway`
+
+7. [PENDING] Once `product_guide.md` is completed, copy the content to `AppBlocks app: SNMP_Modbus_Gateway`
 - [ ] Verify that the guide is present in this app
-7. [PENDING] Export `AppBlocks app: SNMP_Modbus_Gateway`
-8. [PENDING] On top, add bookmarks so that you quickly can go to the chapters and sub-chapters
+8. [PENDING] Export `AppBlocks app: SNMP_Modbus_Gateway`
 
 
 
