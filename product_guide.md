@@ -62,6 +62,7 @@
 
 ---
 
+<a id="1-overview"></a>
 ## 1. Overview [↑](#bookmarks "Back to Bookmarks")
 
 The SNMP–Modbus Gateway lets **SNMP monitoring software read** values from
@@ -87,6 +88,7 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 ---
 
+<a id="2-hardware"></a>
 ## 2. Hardware [↑](#bookmarks "Back to Bookmarks")
 
 | Item | Detail |
@@ -107,6 +109,7 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 ---
 
+<a id="3-network-configuration-and-services"></a>
 ## 3. Network configuration and services [↑](#bookmarks "Back to Bookmarks")
 
 | Item | Setting |
@@ -129,6 +132,7 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 ---
 
+<a id="4-device-console"></a>
 ## 4. Device Console [↑](#bookmarks "Back to Bookmarks")
 
 > The browser-based configuration interface is called the **Device Console**. It
@@ -136,6 +140,7 @@ Modbus equipment instead of being limited to a single sensor or meter.
 
 <br>
 
+<a id="41-database"></a>
 ### 4.1 Database [↑](#bookmarks "Back to Bookmarks")
 
 For every value you want to monitor, configure the gateway with the relevant Modbus device and register.
@@ -159,6 +164,7 @@ your SNMP monitoring system.
 
 <br>
 
+<a id="column-reference"></a>
 ### Column reference [↑](#bookmarks "Back to Bookmarks")
 
 The following table explains the columns shown in the Device Console database
@@ -186,6 +192,7 @@ tables.
 
 <br>
 
+<a id="42-settings"></a>
 ### 4.2 Settings [↑](#bookmarks "Back to Bookmarks")
 
 Use the Settings area to review device information and configure polling,
@@ -195,12 +202,14 @@ network, and SNMP access.
 > - Restart the device after changing a setting.
 > - The new value takes effect after restart.
 
+<a id="421-info"></a>
 #### 4.2.1 Info [↑](#bookmarks "Back to Bookmarks")
 
 The `Info` group displays the device's restart counters and the current and maximum number of `TABLE_DEVICES_INPUT` records.
 
 ![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info.png)
 
+<a id="422-config"></a>
 #### 4.2.2 Config [↑](#bookmarks "Back to Bookmarks")
 
 Use the `Config` group to set the **Polling Interval** and **Debugprint**.
@@ -209,6 +218,7 @@ Use the `Config` group to set the **Polling Interval** and **Debugprint**.
 
 ![Device Console Settings, Config group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_config.png)
 
+<a id="423-network"></a>
 #### 4.2.3 Network [↑](#bookmarks "Back to Bookmarks")
 
 The Network group lets you enable DHCP or configure a static Ethernet IP
@@ -221,6 +231,7 @@ address, netmask, and gateway.
 
 ![Device Console Settings, Network group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_network.png)
 
+<a id="424-snmp"></a>
 #### 4.2.4 SNMP [↑](#bookmarks "Back to Bookmarks")
 
 Use the `SNMP` group to configure how your monitoring system connects to the gateway.
@@ -237,6 +248,7 @@ You can set the SNMP port, read and write community strings, device description,
 
 ![Device Console Settings, SNMPv3 security settings](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_snmp_security_settings.png)
 
+<a id="4241-scalar-instance-object-id"></a>
 #### 4.2.4.1 Scalar Instance Object-ID [↑](#bookmarks "Back to Bookmarks")
 
 Each mapped gateway value is available through a **full SNMP OID**.
@@ -255,10 +267,12 @@ Its composition is:
 
 <br>
 
+<a id="43-system"></a>
 ### 4.3 System [↑](#bookmarks "Back to Bookmarks")
 
 The `System` area lets you restart the device or restore its default settings.
 
+<a id="431-reboot-device"></a>
 #### 4.3.1 Reboot Device [↑](#bookmarks "Back to Bookmarks")
 
 Click **Reboot Device** to restart the device.
@@ -266,6 +280,7 @@ Click **Reboot Device** to restart the device.
 > Restart the device after changing `TABLE_DEVICES_INPUT` or Device Console
 > settings to apply the new configuration.
 
+<a id="432-initialize-settings"></a>
 #### 4.3.2 Initialize Settings [↑](#bookmarks "Back to Bookmarks")
 
 Click **Initialize Settings** to restore the device's default configuration.
@@ -289,6 +304,7 @@ Click **Initialize Settings** to restore the device's default configuration.
 
 ---
 
+<a id="5-deployment-example"></a>
 ## 5. Deployment Example [↑](#bookmarks "Back to Bookmarks")
 
 This example shows how to connect a Modbus device to the gateway, configure a
@@ -300,6 +316,7 @@ a Modbus value and change a device setting.
 
 <br>
 
+<a id="51-connect-the-modbus-bp02-to-the-gateway"></a>
 ### 5.1 Connect the Modbus BP#02 to the Gateway [↑](#bookmarks "Back to Bookmarks")
 
 The deployment steps use a Tibbo Modbus BP#02, a sensor for ambient temperature
@@ -321,6 +338,7 @@ documentation for the required power and communication connections.
 
 <br>
 
+<a id="52-connect-the-network-cable-and-power-adapter"></a>
 ### 5.2 Connect the Network Cable and Power Adapter [↑](#bookmarks "Back to Bookmarks")
 
 Connect an Ethernet cable from the device's RJ45 port to your local network.
@@ -330,6 +348,7 @@ become ready for use.
 
 ![Connecting the Ethernet cable and power adapter to the TPP2W(G2)](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/tpp2wg2_ethernet_power.png)
 
+<a id="53-connect-to-the-device-console"></a>
 ### 5.3 Connect to the Device Console [↑](#bookmarks "Back to Bookmarks")
 
 Using your preferred web browser, navigate to [http://192.168.1.40](http://192.168.1.40). The **Home** page should be displayed.
@@ -338,6 +357,7 @@ Using your preferred web browser, navigate to [http://192.168.1.40](http://192.1
 
 <br>
 
+<a id="54-configure-settings"></a>
 ### 5.4 Configure Settings [↑](#bookmarks "Back to Bookmarks")
 
 Open **Settings** in the Device Console. Review the network, SNMP, and polling
@@ -346,12 +366,14 @@ changes so that the new settings are applied.
 
 > For an overview of the available settings, see [Section 4.2, Settings](#42-settings).
 
+<a id="541-polling-interval"></a>
 #### 5.4.1 Polling Interval [↑](#bookmarks "Back to Bookmarks")
 
 Set the **Polling Interval** in the **Config** group to a value that suits your
 application. This setting determines how often the gateway reads values from
 the connected Modbus device.
 
+<a id="542-network"></a>
 #### 5.4.2 Network [↑](#bookmarks "Back to Bookmarks")
 
 Choose the network method required by your installation in the **Network**
@@ -367,6 +389,7 @@ group:
 After changing the network settings and restarting the device, reconnect to
 the Device Console using its new IP address.
 
+<a id="543-snmp"></a>
 #### 5.4.3 SNMP [↑](#bookmarks "Back to Bookmarks")
 
 Configure the SNMP port and access credentials required by your monitoring
@@ -380,6 +403,7 @@ credentials and security settings approved by your organization.
 
 <br>
 
+<a id="55-configure-modbus-mapping-in-table_devices_input"></a>
 ### 5.5 Configure Modbus Mapping in `TABLE_DEVICES_INPUT` [↑](#bookmarks "Back to Bookmarks")
 
 Open **Database** in the Device Console. In `TABLE_DEVICES_INPUT`, add a
@@ -402,6 +426,7 @@ mapping for each Modbus value that you want to make available through SNMP.
 
 <br>
 
+<a id="56-restart-device"></a>
 ### 5.6 Restart Device [↑](#bookmarks "Back to Bookmarks")
 
 Restart the device so that the new configuration is applied. Allow up to 20
@@ -410,6 +435,7 @@ seconds for the device to fully boot and become ready for use.
 
 <br>
 
+<a id="57-verify-modbus-polled-data-in-table_devices_output"></a>
 ### 5.7 Verify Modbus Polled Data in `TABLE_DEVICES_OUTPUT` [↑](#bookmarks "Back to Bookmarks")
 
 In **Database**, select `TABLE_DEVICES_OUTPUT`. Confirm that the mapping
@@ -433,6 +459,7 @@ results, updated at the configured polling interval.
 
 <br>
 
+<a id="58-verify-modbus-polled-data-via-snmp"></a>
 ### 5.8 Verify Modbus Polled Data via SNMP [↑](#bookmarks "Back to Bookmarks")
 
 This example uses a Linux computer and SNMPv2c to read the Modbus value
@@ -499,6 +526,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.401.0
 
 <br>
 
+<a id="59-write-data-to-modbus"></a>
 ### 5.9 Write Data to Modbus [↑](#bookmarks "Back to Bookmarks")
 
 This section shows how an authorized SNMP client can write a value to a Modbus
@@ -512,6 +540,7 @@ configured Modbus write mapping. The SNMP settings used below are configured in
 > - Use this function only for approved control points and only when it is safe
 >   to change the value on the field device.
 
+<a id="591-read-current-value"></a>
 #### 5.9.1 Read Current Value [↑](#bookmarks "Back to Bookmarks")
 
 Before writing a new value, use `snmpget` to read the current value of the
@@ -525,6 +554,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0
 
 > The current value will be used later to compare with the newly written value.
 
+<a id="592-write-new-value"></a>
 #### 5.9.2 Write New Value [↑](#bookmarks "Back to Bookmarks")
 
 Use the following command to write the value `4546` to `OID_COLUMN` `207`:
@@ -537,6 +567,7 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0 i 4546
 
 > The command sends the value to the connected Modbus device.
 
+<a id="593-verify-snmp-write-response"></a>
 #### 5.9.3 Verify SNMP Write Response [↑](#bookmarks "Back to Bookmarks")
 
 The gateway also provides a confirmation of the most recent SNMP write through
@@ -557,6 +588,7 @@ Confirm that the returned response shows `SUCCESS`.
 > - If the most recent `snmpset` command **failed**, follow the hint shown in the
 >   response and check the Modbus wiring and configuration before trying again.
 
+<a id="594-verify-written-data-via-snmpget"></a>
 #### 5.9.4 Verify Written Data via SNMPGET [↑](#bookmarks "Back to Bookmarks")
 
 Use `snmpget` to confirm the written value through SNMP:
@@ -569,6 +601,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.207.0
 
 Confirm that the returned value is `4546`.
 
+<a id="595-verify-written-data-in-the-device-console"></a>
 #### 5.9.5 Verify Written Data in the Device Console [↑](#bookmarks "Back to Bookmarks")
 
 Wait for at least one polling interval after sending the `snmpset` command.
@@ -586,6 +619,7 @@ the new `VALUE` of `4546`.
 
 <br>
 
+<a id="510-change-settings-via-snmp"></a>
 ### 5.10 Change Settings via SNMP [↑](#bookmarks "Back to Bookmarks")
 
 Authorized SNMP clients can change device settings. Each setting is identified
@@ -595,6 +629,7 @@ in `TABLE_SETTINGS` by its `OID_COLUMN`.
 > - Changing network or SNMP settings **can interrupt your connection** to the device.
 > - A changed device setting is **NOT** applied until the device restarts.
 
+<a id="5101-review-the-setting-in-table_settings"></a>
 #### 5.10.1 Review the Setting in `TABLE_SETTINGS` [↑](#bookmarks "Back to Bookmarks")
 
 In **Database**, select `TABLE_SETTINGS`. Locate the setting you want to change
@@ -605,6 +640,7 @@ and note its `OID_COLUMN`.
 > - Device settings can be changed through the Device Console or SNMP.
 
 
+<a id="5102-write-network-settings-using-snmp"></a>
 #### 5.10.2 Write Network Settings Using SNMP [↑](#bookmarks "Back to Bookmarks")
 
 Most installations use a static IP address that matches the local network. For
@@ -624,6 +660,7 @@ current IP address, `192.168.1.40`.
 
 > After each `snmpset` command, run the response command within 30 seconds to confirm that the write succeeded.
 
+<a id="51021-disable-dhcp"></a>
 ##### 5.10.2.1 Disable DHCP [↑](#bookmarks "Back to Bookmarks")
 
 Disable DHCP:
@@ -644,6 +681,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 
 Confirm that the returned response shows `SUCCESS`.
 
+<a id="51022-set-the-ip-address"></a>
 ##### 5.10.2.2 Set the IP Address [↑](#bookmarks "Back to Bookmarks")
 
 Set the device IP address:
@@ -664,6 +702,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 
 Confirm that the returned response shows `SUCCESS`.
 
+<a id="51023-set-the-subnet-mask"></a>
 ##### 5.10.2.3 Set the Subnet Mask [↑](#bookmarks "Back to Bookmarks")
 
 Set the subnet mask:
@@ -684,6 +723,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 
 Confirm that the returned response shows `SUCCESS`.
 
+<a id="51024-set-the-gateway-address"></a>
 ##### 5.10.2.4 Set the Gateway Address [↑](#bookmarks "Back to Bookmarks")
 
 Set the gateway address:
@@ -704,6 +744,7 @@ snmpget -v2c -c public 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65534.0
 
 Confirm that the returned response shows `SUCCESS`.
 
+<a id="5103-verify-written-settings-via-snmpget"></a>
 #### 5.10.3 Verify Written Settings via SNMPGET [↑](#bookmarks "Back to Bookmarks")
 
 To verify that the settings have changed correctly, use the following commands:
@@ -724,6 +765,7 @@ The results of the above commands are shown here:
 
 > The settings are stored but are not active until the device restarts.
 
+<a id="5104-verify-written-settings-in-the-device-console"></a>
 #### 5.10.4 Verify Written Settings in the Device Console [↑](#bookmarks "Back to Bookmarks")
 
 In the Device Console:
@@ -739,6 +781,7 @@ In the Device Console:
 
 > The settings are stored but are not active until the device restarts.
 
+<a id="5105-reboot-device-via-snmp"></a>
 #### 5.10.5 Reboot Device via SNMP [↑](#bookmarks "Back to Bookmarks")
 
 To apply the changed settings, send two reboot signals within 10 seconds. The
@@ -746,6 +789,7 @@ reboot setting is `SYS_REBOOT_DEVICE`, with OID column `65520`.
 
 ![Device Console Database, SYS_REBOOT_DEVICE setting](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_settings_system_reboot.png)
 
+<a id="51051-send-1st-reboot-signal"></a>
 ##### 5.10.5.1 Send 1st Reboot Signal [↑](#bookmarks "Back to Bookmarks")
 
 Send the first reboot signal:
@@ -759,6 +803,7 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 > The device does not reboot after this first signal. It starts a 10-second
 > confirmation window for the second signal.
 
+<a id="51052-verify-1st-reboot-signal"></a>
 ##### 5.10.5.2 Verify 1st Reboot Signal [↑](#bookmarks "Back to Bookmarks")
 
 Immediately check the response and reboot setting:
@@ -773,6 +818,7 @@ Confirm that the response OID column `65534` reports `SUCCESS`, and that
 
 ![Linux terminal, SNMP get first reboot signal response](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_snmpget_reboot_device_example.png)
 
+<a id="51053-send-2nd-reboot-signal-within-10-seconds"></a>
 ##### 5.10.5.3 Send 2nd Reboot Signal within 10 Seconds [↑](#bookmarks "Back to Bookmarks")
 
 Within 10 seconds of the first signal, send the same command again:
@@ -794,6 +840,7 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 
 --- 
 
+<a id="6-commissioning-checklist"></a>
 ## 6. Commissioning checklist [↑](#bookmarks "Back to Bookmarks")
 
 1. Install and check the RS-485 wiring.
@@ -827,6 +874,7 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 
 ---
 
+<a id="7-troubleshooting"></a>
 ## 7. Troubleshooting [↑](#bookmarks "Back to Bookmarks")
 
 | Symptom | Checks |
