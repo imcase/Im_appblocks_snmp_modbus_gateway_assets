@@ -46,20 +46,16 @@ Go-back-to: [Bookmarks](#bookmarks)
 6. [COMPLETED] Add bookmarks at the top for quick navigation to chapters and sub-chapters
 
 
-7. [PENDING] Once `product_guide.md` is completed, copy the content to `AppBlocks app: SNMP_Modbus_Gateway`
-- [ ] Verify that the guide is present in this app
-8. [PENDING] Export `AppBlocks app: SNMP_Modbus_Gateway`
+7. [COMPLETED] Once `product_guide.md` is completed, copy the content to `AppBlocks app: SNMP_Modbus_Gateway`
+- [X] Verify that the guide is present in this app
+8. [COMPLETED] Export `AppBlocks app: SNMP_Modbus_Gateway`
+9. [COMPLETED] Upload the project file `SNMP_Modbus_Gateway.json` to this repo `Im_snmp_modbus_gateway_assets`
 
-
-
-10. [PENDING] Upload the project file `SNMP_Modbus_Gateway.json` to this repo `Im_snmp_modbus_gateway_assets`
-**NOTE:** May need to keep on copying updated versions of this project.
-11. [PENDING] Add `imcase/snmp_modbus_gateway_assets` as __SUBMODULE__ to `appblocks_snmp_modbus_gateway`
-12. [PENDING] On github, under the `tibbotech` account, create a __PUBLIC__ repo called `snmp_modbus_gateway_assets`
+10. [PENDING] On github, under the `tibbotech` account, create a __PUBLIC__ repo called `snmp_modbus_gateway_assets`
 - [ ] Copy all the files and folders from `imcase/snmp_modbus_gateway_assets` to `tibbotech/snmp_modbus_gateway_assets`
 - [ ] In `product_guide.md` change references of __images__ from `imcase/Im_snmp_modbus_gateway_assets` to `tibbotech/snmp_modbus_gateway_assets`
 **NOTE:** If you do NOT do this, then you won't be able to see the images
-
+11. [PENDING] Add `imcase/snmp_modbus_gateway_assets` as __SUBMODULE__ to `appblocks_snmp_modbus_gateway`
 
 
 ---
