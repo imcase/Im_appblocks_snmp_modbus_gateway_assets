@@ -147,7 +147,7 @@ The `Info` group displays the device's restart counters and the current and maxi
 
 Use the `Config` group to set the **Polling Interval** and **Debugprint**.
 
-> Adjust the `Polling Interval` to suit your application requirements.
+> **NOTE:** The supported `Polling Interval` range is 0.1 to 60 seconds.
 
 ![Device Console Settings, Config group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_config.png)
 
@@ -173,6 +173,7 @@ You can set the SNMP port, read and write community strings, device description,
 > **NOTE:**
 > - **Read:** Use SNMP monitoring software to read gateway values with `snmpget` or `snmpwalk`.
 > - **Write:** Authorized SNMP clients can configure **ALL** gateway SNMP objects with `snmpset`.
+> - For SNMPv2c, an empty write community disables `snmpset` requests.
 
 <br>
 
@@ -217,6 +218,9 @@ Click **Initialize Settings** to restore the device's default configuration.
 >
 > - Press and hold the button for at least **5 seconds**, then release it.
 > - Releasing the button *before* 5 seconds have elapsed has **no effect**.
+>
+> **NOTE:** Restart the device after initializing settings or using the MD
+> button so that the restored settings take effect.
 
 <br>
 
@@ -328,6 +332,7 @@ mapping for each Modbus value that you want to make available through SNMP.
 >   the connected field device's Modbus register map or datasheet.
 > - Each `OID_COLUMN` value must be **UNIQUE**. For details, see
 >   [Section 4.2.4.1, Scalar Instance Object-ID](#4241-scalar-instance-object-id).
+> - `TABLE_DEVICES_INPUT` supports a maximum of **30** mappings.
 > - `OID_COLUMN = 207` is used later in this guide to demonstrate **Write Data
 >   to Modbus**.
 
@@ -362,6 +367,7 @@ results, updated at the configured polling interval.
 >   `TABLE_DEVICES_INPUT`.
 > - You can ignore the `HASH_ID`, since it is an internal identifier used by
 >   the gateway.
+> - Click **Refresh** to update the displayed table data.
 
 ![Device Console Database, TABLE_DEVICES_OUTPUT](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_database_table_devices_output.png)
 
@@ -732,20 +738,32 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 
 ## 6. Commissioning checklist
 
-1. Record the field device's Modbus register map, communication parameters,
-   data representation, and expected engineering values.
-2. Install and verify the RS-485 hardware and field wiring.
-3. Configure Ethernet addressing for the local network and limit management
-   access to authorized hosts.
-4. Create the Modbus-to-SNMP mappings and restart the device if required.
-5. Prove the southbound path first: confirm that the gateway successfully
-   polls the expected raw Modbus value.
-6. From an SNMP manager, walk the private enterprise branch and use the exact
-   returned scalar OID for an SNMP GET.
-7. Change the physical input or simulated register, wait for a successful
-   Modbus poll, and verify that the SNMP value changes accordingly.
-8. Where a write mapping is deliberately enabled, test it in a safe bench
-   setup and verify the resulting field-device register separately.
+1. Install and check the RS-485 wiring.
+2. Connect the Ethernet cable and power adapter. Wait for the device to boot.
+3. Open the Device Console at the device's current IP address.
+4. In **Device Console > Settings > Config**, check the polling interval and
+   adjust it if needed.
+5. In **Device Console > Settings > Network**, configure the Ethernet settings
+   required by the local network.
+6. In **Device Console > Settings > SNMP**, configure the port and access
+   credentials required by the SNMP manager.
+7. Restrict management access to authorized hosts.
+8. Gather the Modbus register map, communication parameters, data format, and
+   expected values.
+9. In **Device Console > Database > TABLE_DEVICES_INPUT**, create the
+   Modbus-to-SNMP mappings using this information.
+10. Restart the device to apply the mappings and settings.
+11. Confirm that the gateway polls the expected Modbus value.
+12. Run `snmpwalk` on the enterprise branch, then use the returned full scalar
+   OID with `snmpget`.
+13. Where safe, change the physical input or simulated register. Wait for a
+   Modbus poll and confirm that the SNMP value changes.
+14. If enabled, test each write mapping safely. Check the SNMP response and
+   verify the field-device register.
+15. After changing settings in the Device Console or via SNMP, verify the
+   stored values and restart the device.
+
+> For an SNMP reboot, send two signals within 10 seconds. Confirm that the device comes back online.
 
 <br><br>
 
@@ -758,6 +776,12 @@ snmpset -v2c -c private 192.168.1.40 1.3.6.1.4.1.20738.45.46.1.65520.0 s true
 | SNMP responds but value is stale or zero | Verify the Modbus poll result, unit ID, function code, register addressing, serial settings, scaling, and byte/word order. An SNMP response alone does not prove the field link works. |
 | SNMP GET returns `No Such Object` or `No Such Instance` | Walk the configured enterprise branch and query the full scalar OID, including its `.0` instance suffix. |
 | No Modbus response | Check RS-485 polarity, termination/biasing, serial parameters, selected Tibbit/socket, unit ID, and whether the target actually supports the requested function/register. |
-| SNMP SET fails | Confirm that the object is configured read/write, the caller is authorized, the write mapping exists, and the field device accepts the function/value. |
+| `TABLE_DEVICES_OUTPUT` is empty | Add at least one mapping to `TABLE_DEVICES_INPUT`, restart the device, wait for a polling interval, then click **Refresh**. |
+| Cannot add another Modbus mapping | `TABLE_DEVICES_INPUT` supports a maximum of 30 entries. Remove an unused mapping before adding another one. |
+| Polling is too slow or does not start as expected | Check **Settings > Config > Polling Interval**. The supported range is 0.1 to 60 seconds. |
+| SNMP SET fails | Confirm that the write community is correct and not empty, the object is read/write, the caller is authorized, the write mapping exists, and the field device accepts the function/value. |
+| SNMP response OID `65534` returns `IDLE` | Query it within 30 seconds of the `snmpset` command; the response then resets to `IDLE`. |
+| Device does not reboot through SNMP | Send `true` to `SYS_REBOOT_DEVICE` twice within 10 seconds. The first signal only starts the confirmation timer. |
+| Default initialization did not take effect | Restart the device after **Initialize Settings** or an MD-button reset. |
 | Value has the wrong magnitude | Check signedness, scale factor, register count, and byte/word order. |
 

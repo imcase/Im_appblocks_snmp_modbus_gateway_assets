@@ -39,7 +39,7 @@ Go-back-to: [Bookmarks](#bookmarks)
 - [X] __MUST__ explicitly state that the device must be `restarted after every modification`.
 4. [COMPLETED] __MUST__ document `MD button` handling, including the following reset procedure:
 
-5. [IN_PROGRESS] __MUST__ add an example showing from start to end how to use the device
+5. [COMPLETED] __MUST__ add an example showing from start to end how to use the device
 - [ ] Do NOT forget an example of `snmpwalk`, `snmpget`, and `snmpset`
 - [ ] Do __NOT__ forget to also use an example with `reboot_device`
 **NOTE:** this is important because the customer should be aware that they have to trigger `reboot_device` twice within `10 seconds` or this to take effect
@@ -47,6 +47,9 @@ Go-back-to: [Bookmarks](#bookmarks)
 6. [PENDING] Once `product_guide.md` is completed, copy the content to `AppBlocks app: SNMP_Modbus_Gateway`
 - [ ] Verify that the guide is present in this app
 7. [PENDING] Export `AppBlocks app: SNMP_Modbus_Gateway`
+8. [PENDING] On top, add bookmarks so that you quickly can go to the chapters and sub-chapters
+
+
 
 10. [PENDING] Upload the project file `SNMP_Modbus_Gateway.json` to this repo `Im_snmp_modbus_gateway_assets`
 **NOTE:** May need to keep on copying updated versions of this project.
