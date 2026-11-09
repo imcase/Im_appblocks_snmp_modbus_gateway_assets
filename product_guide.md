@@ -209,6 +209,11 @@ The `Info` group displays the device's restart counters and the current and maxi
 
 ![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info.png)
 
+> **NOTE:**
+>
+> - The Reboot Counter can only be reset in the Device Console, not via SNMP.
+> - The Reboot Rollover Counter records how many times the Reboot Counter has reached `65535` and rolled over to `1`. The total number of registered reboots is `Reboot Rollover Counter * 65535 + Reboot Counter`.
+
 <a id="422-config"></a>
 #### 4.2.2 Config [↑](#bookmarks "Back to Bookmarks")
 
