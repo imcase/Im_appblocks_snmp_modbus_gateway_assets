@@ -208,7 +208,7 @@ network, and SNMP access.
 
 The `Info` group displays the current and maximum number of `TABLE_DEVICES_INPUT` records.
 
-![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_appblocks_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info.png)
+![Device Console Settings, Info group](https://raw.githubusercontent.com/imcase/Im_appblocks_snmp_modbus_gateway_assets/refs/heads/main/assets/snmp_modbus_gateway_webconsole_settings_info_rev2.png)
 
 <a id="422-config"></a>
 #### 4.2.2 Config [↑](#bookmarks "Back to Bookmarks")
